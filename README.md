@@ -1,0 +1,1 @@
+Project for finding duplicate files from a folder

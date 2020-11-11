@@ -16,7 +16,7 @@ from p1utils import all_files, compare
 
 
 def search(file_list):
-    img = all_files("images")
+    img = all_files("images")  #Put all image files into list img
     lol = []
     while 0 < len(img):
         dups = [x for x in img if compare(img[0], x)]
@@ -28,7 +28,7 @@ def search(file_list):
 
 
 
-def faster_search(file_list):
+def faster_search(file_list):   # Faster searh function
     lol = []
     file_size = list(map(getsize, file_list))
     filtered = filter(lambda x: 1 < file_size.count(getsize(x)), file_list)
@@ -43,19 +43,18 @@ def faster_search(file_list):
 
 def report(lol):
     print("== == Duplicate File Finder Report == ==")
-    r = max(lol, key=lambda x: len(x))
-    print("The file with the most copies is: ")
-    print(r[0])
-    print("Here are its 7 copies: ")
-    for x in zip(r[1:]):
-        print(''.join(x))
+    item = max(lol, key=len)
+    print(f"This file: {item[0]} has the most duplicate files: {len(item) - 1}")
+    print("Here are its 7 copies : ")
+    for i in range(1, len(item)):
+        print(item[i])
+
     print("")
-    l = lol[4]
-    print("The most disk space (79,368) could be recovered , by deleting copies of this file:")
-    print(l[0])
+    item = max(lol, key=lambda x: len(x) * getsize(x[0]))
+    print(f"This file: {item[0]} takes up the most disk space : {getsize(item[0]) * (len(item) - 1)}")
     print("Here are its 2 copies")
-    for x in zip(l[1:]):
-        print(''.join(x))
+    for i in range(1, len(item)):
+        print(item[i])
 
 
 if __name__ == '__main__':
